@@ -15,7 +15,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className={`bg-taleweaver-purple text-white rounded-full p-2 ${sizeClasses[size]}`}>
+      <div className={`bg-playscribe-purple text-white rounded-full p-2 ${sizeClasses[size]}`}>
         <svg
           className="h-full w-auto"
           viewBox="0 0 24 24"
@@ -84,8 +84,8 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
         </svg>
       </div>
       <div className="font-bold">
-        <span className="text-taleweaver-darkPurple">Play</span>
-        <span className="text-taleweaver-purple">Scribe</span>
+        <span className="text-playscribe-black">Play</span>
+        <span className="text-playscribe-purple">Scribe</span>
       </div>
     </div>
   );

@@ -63,13 +63,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				taleweaver: {
-					purple: '#9b87f5',
-					darkPurple: '#7E69AB',
-					lightPurple: '#E5DEFF',
-					yellow: '#FEF7CD',
-					peach: '#FDE1D3',
-					blue: '#D3E4FD'
+				playscribe: {
+					teal: '#36A89F',
+					coral: '#E4746B',
+					purple: '#632D6E',
+					black: '#040404',
+					lightGray: '#FDFCFC'
 				}
 			},
 			borderRadius: {
