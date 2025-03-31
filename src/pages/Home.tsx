@@ -17,7 +17,7 @@ const Home = () => {
         </h1>
         
         <p className="text-lg max-w-2xl text-center mb-12">
-          TaleWeaver helps older Australians preserve their stories and transforms them into fun, 
+          PlayScribe helps older Australians preserve their stories and transforms them into fun, 
           interactive games for children to enjoy and learn from.
         </p>
         
@@ -74,7 +74,7 @@ const Home = () => {
               <div className="w-12 h-12 rounded-full bg-taleweaver-purple text-white flex items-center justify-center text-lg font-bold mb-3">
                 2
               </div>
-              <p className="text-sm">TaleWeaver transforms stories into interactive games</p>
+              <p className="text-sm">PlayScribe transforms stories into interactive games</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-12 h-12 rounded-full bg-taleweaver-purple text-white flex items-center justify-center text-lg font-bold mb-3">

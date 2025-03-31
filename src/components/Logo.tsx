@@ -22,35 +22,70 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          {/* Silhouette of an older person */}
           <path
-            d="M12 6.5C12 6.5 9 3.5 5 3.5C3 3.5 2 4.5 2 6.5C2 8.5 3 10.5 5 10.5C7 10.5 12 6.5 12 6.5Z"
+            d="M12 4C10.5 4 9.25 5 9 6.5C8.9 7 8.9 7.5 9 8C9.25 9.5 10.5 10.5 12 10.5C13.5 10.5 14.75 9.5 15 8C15.1 7.5 15.1 7 15 6.5C14.75 5 13.5 4 12 4Z"
             fill="currentColor"
             stroke="currentColor"
-            strokeWidth="1"
+            strokeWidth="0.5"
           />
+          {/* Head outline */}
           <path
-            d="M12 6.5C12 6.5 15 3.5 19 3.5C21 3.5 22 4.5 22 6.5C22 8.5 21 10.5 19 10.5C17 10.5 12 6.5 12 6.5Z"
+            d="M7 14C7 11.2386 9.23858 9 12 9C14.7614 9 17 11.2386 17 14"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+          />
+          {/* Remote controller as glasses */}
+          <rect
+            x="8"
+            y="7"
+            width="8"
+            height="2"
+            rx="0.5"
+            fill="currentColor"
+          />
+          <rect
+            x="7"
+            y="7"
+            width="1.5"
+            height="0.8"
+            rx="0.4"
+            fill="currentColor"
+          />
+          <rect
+            x="15.5"
+            y="7"
+            width="1.5"
+            height="0.8"
+            rx="0.4"
+            fill="currentColor"
+          />
+          {/* Speech bubble / storytelling */}
+          <path
+            d="M17 12C19 12 20 13.5 20 15C20 16.5 19 18 17 18H16L15 20L14 18H13C11 18 10 16.5 10 15C10 13.5 11 12 13 12H17Z"
             fill="currentColor"
             stroke="currentColor"
-            strokeWidth="1"
+            strokeWidth="0.5"
           />
-          <path
-            d="M12 6.5V20.5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+          {/* Button on remote */}
+          <circle
+            cx="9.5"
+            cy="7.4"
+            r="0.4"
+            fill="white"
           />
-          <path
-            d="M7 15C7 15 9 17 12 17C15 17 17 15 17 15"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+          <circle
+            cx="16.5"
+            cy="7.4"
+            r="0.4"
+            fill="white"
           />
         </svg>
       </div>
       <div className="font-bold">
-        <span className="text-taleweaver-darkPurple">Tale</span>
-        <span className="text-taleweaver-purple">Weaver</span>
+        <span className="text-taleweaver-darkPurple">Play</span>
+        <span className="text-taleweaver-purple">Scribe</span>
       </div>
     </div>
   );
