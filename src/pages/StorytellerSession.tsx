@@ -43,26 +43,26 @@ const StorytellerSession = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-taleweaver-lightPurple/30 to-white">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-8">
           <Link to="/">
             <Logo size="md" />
           </Link>
-          <div className="bg-white px-4 py-2 rounded-full text-sm font-medium border border-taleweaver-lightPurple">
-            Room Code: <span className="text-taleweaver-purple">{roomCode}</span>
+          <div className="bg-white px-4 py-2 rounded-full text-sm font-medium border border-gray-200">
+            Room Code: <span className="text-playscribe-purple">{roomCode}</span>
           </div>
         </div>
         
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-taleweaver-darkPurple">Storyteller Session</h1>
+          <h1 className="text-3xl font-bold text-playscribe-purple">Storyteller Session</h1>
           <p className="text-gray-600">
             Record your story and we'll transform it into an interactive game.
           </p>
         </div>
         
         {selectedPrompt && (
-          <Card className="p-4 mb-6 bg-taleweaver-yellow border-0">
+          <Card className="p-4 mb-6 bg-muted border-0">
             <p className="font-medium">Selected Prompt: "{selectedPrompt}"</p>
           </Card>
         )}

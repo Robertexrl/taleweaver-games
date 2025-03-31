@@ -9,7 +9,7 @@ const Login = () => {
   const { userType } = useParams<{ userType: 'storyteller' | 'player' }>();
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-taleweaver-lightPurple/50 to-white">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12 flex flex-col items-center">
         <Link to="/">
           <Logo size="md" className="mb-8" />

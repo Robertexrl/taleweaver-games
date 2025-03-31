@@ -51,19 +51,19 @@ const GamePlay = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-taleweaver-blue/30 to-white">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-8">
           <Link to="/">
             <Logo size="md" />
           </Link>
-          <div className="bg-white px-4 py-2 rounded-full text-sm font-medium border border-taleweaver-lightPurple">
-            Room Code: <span className="text-taleweaver-purple">{roomCode}</span>
+          <div className="bg-white px-4 py-2 rounded-full text-sm font-medium border border-gray-200">
+            Room Code: <span className="text-playscribe-purple">{roomCode}</span>
           </div>
         </div>
         
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-taleweaver-darkPurple mb-2">Story Game</h1>
+          <h1 className="text-3xl font-bold text-playscribe-purple mb-2">Story Game</h1>
           <p className="text-gray-600 max-w-xl mx-auto">
             This interactive game was created from a real story shared by someone from an older generation.
           </p>
@@ -71,7 +71,7 @@ const GamePlay = () => {
         
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-taleweaver-purple mb-4 mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-playscribe-purple mb-4 mx-auto"></div>
             <p className="text-xl font-medium">Loading the story game...</p>
           </div>
         ) : (
@@ -82,7 +82,7 @@ const GamePlay = () => {
               <Button 
                 onClick={handleNewGame}
                 variant="outline"
-                className="border-taleweaver-purple text-taleweaver-darkPurple"
+                className="border-playscribe-purple text-playscribe-purple"
               >
                 Try Another Game
               </Button>

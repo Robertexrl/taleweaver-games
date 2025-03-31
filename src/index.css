@@ -23,7 +23,7 @@
     --muted: 0 0% 95%;
     --muted-foreground: 0 0% 50%;
 
-    --accent: 5 69% 66%;
+    --accent: 278 42% 30%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -58,7 +58,7 @@
   }
   
   .btn-secondary {
-    @apply bg-playscribe-teal hover:bg-playscribe-teal/80 hover:text-white text-white py-4 px-6 rounded-xl font-medium text-lg shadow-md transition-all duration-300 flex items-center justify-center gap-2;
+    @apply bg-playscribe-teal hover:bg-playscribe-teal/80 text-white py-4 px-6 rounded-xl font-medium text-lg shadow-md transition-all duration-300 flex items-center justify-center gap-2;
   }
 
   .card-container {
