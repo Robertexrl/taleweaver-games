@@ -64,9 +64,9 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				playscribe: {
+					purple: '#632D6E',
 					teal: '#36A89F',
 					coral: '#E4746B',
-					purple: '#632D6E',
 					black: '#040404',
 					lightGray: '#FDFCFC'
 				}

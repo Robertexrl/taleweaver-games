@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-b from-[#9f5dab]/30 to-[#f3edf5] text-foreground min-h-screen;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
