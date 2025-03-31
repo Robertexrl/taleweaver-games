@@ -16,6 +16,18 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedbackRating, setFeedbackRating] = useState(0);
   const { toast } = useToast();
+  
+  // Quiz states
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [score, setScore] = useState(0);
+  const [quizComplete, setQuizComplete] = useState(false);
+  
+  // Memory game states
+  const [flipped, setFlipped] = useState<number[]>([]);
+  const [matched, setMatched] = useState<number[]>([]);
+  const [moves, setMoves] = useState(0);
+  const [gameComplete, setGameComplete] = useState(false);
 
   useEffect(() => {
     if (storyText) {
@@ -25,6 +37,16 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
 
   const generateGame = () => {
     setLoading(true);
+    
+    // Reset all game states when generating a new game
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setScore(0);
+    setQuizComplete(false);
+    setFlipped([]);
+    setMatched([]);
+    setMoves(0);
+    setGameComplete(false);
     
     // Select a random game type for demo purposes
     const types: ('quiz' | 'memory' | 'drawing')[] = ['quiz', 'memory', 'drawing'];
@@ -122,30 +144,66 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     setShowFeedback(false);
   };
 
-  const renderQuizGame = () => {
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-    const [score, setScore] = useState(0);
-    const [quizComplete, setQuizComplete] = useState(false);
-
-    const handleAnswerSelect = (index: number) => {
-      setSelectedAnswer(index);
-      
-      if (index === gameContent.questions[currentQuestion].answer) {
-        setScore(prev => prev + 1);
+  const handleAnswerSelect = (index: number) => {
+    setSelectedAnswer(index);
+    
+    if (index === gameContent?.questions[currentQuestion]?.answer) {
+      setScore(prev => prev + 1);
+    }
+    
+    // Move to next question after a short delay
+    setTimeout(() => {
+      if (currentQuestion < gameContent?.questions.length - 1) {
+        setCurrentQuestion(prev => prev + 1);
+        setSelectedAnswer(null);
+      } else {
+        setQuizComplete(true);
       }
-      
-      // Move to next question after a short delay
-      setTimeout(() => {
-        if (currentQuestion < gameContent.questions.length - 1) {
-          setCurrentQuestion(prev => prev + 1);
-          setSelectedAnswer(null);
-        } else {
-          setQuizComplete(true);
-        }
-      }, 1000);
-    };
+    }, 1000);
+  };
 
+  const handleCardClick = (id: number) => {
+    // Don't allow more than 2 cards flipped at once
+    if (flipped.length === 2) return;
+    
+    // Don't allow clicking already matched cards
+    if (matched.includes(id)) return;
+    
+    // Don't allow clicking already flipped card
+    if (flipped.includes(id)) return;
+    
+    const newFlipped = [...flipped, id];
+    setFlipped(newFlipped);
+    
+    // If we have 2 cards flipped, check for a match
+    if (newFlipped.length === 2) {
+      setMoves(prev => prev + 1);
+      
+      const [first, second] = newFlipped;
+      const firstCard = gameContent?.pairs.find((p: any) => p.id === first);
+      const secondCard = gameContent?.pairs.find((p: any) => p.id === second);
+      
+      if (firstCard?.content === secondCard?.content) {
+        // Match found
+        setMatched(prev => [...prev, first, second]);
+        setFlipped([]);
+        
+        // Check if game is complete
+        if (matched.length + 2 === gameContent?.pairs.length) {
+          setGameComplete(true);
+        }
+      } else {
+        // No match, flip cards back after a delay
+        setTimeout(() => {
+          setFlipped([]);
+        }, 1000);
+      }
+    }
+  };
+
+  const renderQuizGame = () => {
+    if (!gameContent?.questions) return null;
+    
     return (
       <div className="space-y-6">
         <h3 className="text-xl font-bold text-center">Story Quiz</h3>
@@ -203,50 +261,8 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
   };
 
   const renderMemoryGame = () => {
-    const [flipped, setFlipped] = useState<number[]>([]);
-    const [matched, setMatched] = useState<number[]>([]);
-    const [moves, setMoves] = useState(0);
-    const [gameComplete, setGameComplete] = useState(false);
-
-    const handleCardClick = (id: number) => {
-      // Don't allow more than 2 cards flipped at once
-      if (flipped.length === 2) return;
-      
-      // Don't allow clicking already matched cards
-      if (matched.includes(id)) return;
-      
-      // Don't allow clicking already flipped card
-      if (flipped.includes(id)) return;
-      
-      const newFlipped = [...flipped, id];
-      setFlipped(newFlipped);
-      
-      // If we have 2 cards flipped, check for a match
-      if (newFlipped.length === 2) {
-        setMoves(prev => prev + 1);
-        
-        const [first, second] = newFlipped;
-        const firstCard = gameContent.pairs.find((p: any) => p.id === first);
-        const secondCard = gameContent.pairs.find((p: any) => p.id === second);
-        
-        if (firstCard.content === secondCard.content) {
-          // Match found
-          setMatched(prev => [...prev, first, second]);
-          setFlipped([]);
-          
-          // Check if game is complete
-          if (matched.length + 2 === gameContent.pairs.length) {
-            setGameComplete(true);
-          }
-        } else {
-          // No match, flip cards back after a delay
-          setTimeout(() => {
-            setFlipped([]);
-          }, 1000);
-        }
-      }
-    };
-
+    if (!gameContent?.pairs) return null;
+    
     return (
       <div className="space-y-6">
         <h3 className="text-xl font-bold text-center">Memory Game</h3>
@@ -293,6 +309,8 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
   };
 
   const renderDrawingGame = () => {
+    if (!gameContent?.scene) return null;
+    
     return (
       <div className="space-y-6">
         <h3 className="text-xl font-bold text-center">Story Drawing</h3>
