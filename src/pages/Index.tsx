@@ -1,90 +1,53 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-12 flex flex-col items-center">
-        <Logo size="lg" className="mb-8" />
+    <div className="min-h-screen flex flex-col items-center justify-between py-10 px-6">
+      <div className="w-full flex justify-end">
+        <div className="text-xs text-gray-600">Terms and Privacy</div>
+      </div>
+      
+      <div className="flex flex-col items-center justify-center flex-grow text-center">
+        <Logo size="lg" className="mb-12" />
         
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-          <span className="text-playscribe-purple">Connecting Generations</span>
-          <br />
-          <span className="text-playscribe-purple">Through Stories & Games</span>
+        <h1 className="text-5xl md:text-6xl font-bold text-black mb-4 leading-tight">
+          Connecting Generations<br />
+          Stories and Games
         </h1>
         
-        <p className="text-lg max-w-2xl text-center mb-12">
-          PlayScribe helps older Australians preserve their stories and transforms them into fun, 
-          interactive games for children to enjoy and learn from.
+        <p className="text-xl max-w-xl mb-12 mt-8">
+          "Ready to share a story or play one?"<br />
+          (Tap to begin your adventure!)
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
-          <div className="card-container flex flex-col items-center text-center p-8">
-            <div className="bg-playscribe-purple w-24 h-24 rounded-full flex items-center justify-center mb-4">
-              <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 16V22" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M8 18H16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <div className="flex flex-col md:flex-row gap-6 w-full max-w-2xl mt-6 justify-center">
+          <Link to="/login/storyteller" className="w-full md:w-auto">
+            <button className="btn-primary w-full md:w-64 py-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                <path d="M12 18C15.866 18 19 14.866 19 11C19 7.13401 15.866 4 12 4C8.13401 4 5 7.13401 5 11C5 14.866 8.13401 18 12 18Z" stroke="white" strokeWidth="2" />
+                <path d="M8 10C8 10 9.5 12 12 12C14.5 12 16 10 16 10" stroke="white" strokeWidth="2" strokeLinecap="round" />
               </svg>
-            </div>
-            <h2 className="text-2xl font-bold mb-3 text-playscribe-purple">Storytellers</h2>
-            <p className="mb-6 text-gray-600">
-              Share your life experiences and have them transformed into games for the younger generation.
-            </p>
-            <Link to="/login/storyteller" className="mt-auto">
-              <Button className="btn-primary">
-                Start Storytelling
-              </Button>
-            </Link>
-          </div>
+              Tell Story
+            </button>
+          </Link>
           
-          <div className="card-container flex flex-col items-center text-center p-8">
-            <div className="bg-playscribe-teal w-24 h-24 rounded-full flex items-center justify-center mb-4">
-              <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="4" width="18" height="12" rx="2" stroke="white" strokeWidth="2"/>
-                <path d="M10 8L16 12L10 16V8Z" fill="white"/>
-                <path d="M7 20H17" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+          <Link to="/login/player" className="w-full md:w-auto">
+            <button className="btn-secondary w-full md:w-64 py-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                <rect x="4" y="6" width="16" height="10" rx="2" stroke="white" strokeWidth="2"/>
+                <path d="M10 9L14 11L10 13V9Z" fill="white"/>
+                <path d="M7 16H17" stroke="white" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-            </div>
-            <h2 className="text-2xl font-bold mb-3 text-playscribe-teal">Game Players</h2>
-            <p className="mb-6 text-gray-600">
-              Play fun games based on real-life stories and learn from the experiences of older generations.
-            </p>
-            <Link to="/login/player" className="mt-auto">
-              <Button className="btn-secondary">
-                Play Games
-              </Button>
-            </Link>
-          </div>
-        </div>
-        
-        <div className="mt-16 max-w-2xl text-center">
-          <h3 className="text-xl font-semibold mb-4 text-playscribe-black">How It Works</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-playscribe-purple text-white flex items-center justify-center text-lg font-bold mb-3">
-                1
-              </div>
-              <p className="text-sm">Storytellers record their experiences using simple voice tools</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-playscribe-purple text-white flex items-center justify-center text-lg font-bold mb-3">
-                2
-              </div>
-              <p className="text-sm">PlayScribe transforms stories into interactive games</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-playscribe-purple text-white flex items-center justify-center text-lg font-bold mb-3">
-                3
-              </div>
-              <p className="text-sm">Children play games and connect with older generations' experiences</p>
-            </div>
-          </div>
+              Play Game
+            </button>
+          </Link>
         </div>
       </div>
+      
+      <div className="h-10"></div>
     </div>
   );
 };

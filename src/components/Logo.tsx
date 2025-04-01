@@ -8,84 +8,44 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
   const sizeClasses = {
-    sm: 'h-8',
-    md: 'h-12',
-    lg: 'h-16'
+    sm: 'h-10 w-10',
+    md: 'h-16 w-16',
+    lg: 'h-20 w-20'
   };
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className={`bg-playscribe-purple text-white rounded-full p-2 ${sizeClasses[size]}`}>
-        <svg
-          className="h-full w-auto"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Silhouette of an older person */}
-          <path
-            d="M12 4C10.5 4 9.25 5 9 6.5C8.9 7 8.9 7.5 9 8C9.25 9.5 10.5 10.5 12 10.5C13.5 10.5 14.75 9.5 15 8C15.1 7.5 15.1 7 15 6.5C14.75 5 13.5 4 12 4Z"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="0.5"
-          />
-          {/* Head outline */}
-          <path
-            d="M7 14C7 11.2386 9.23858 9 12 9C14.7614 9 17 11.2386 17 14"
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-          />
-          {/* Remote controller as glasses */}
-          <rect
-            x="8"
-            y="7"
-            width="8"
-            height="2"
-            rx="0.5"
-            fill="currentColor"
-          />
-          <rect
-            x="7"
-            y="7"
-            width="1.5"
-            height="0.8"
-            rx="0.4"
-            fill="currentColor"
-          />
-          <rect
-            x="15.5"
-            y="7"
-            width="1.5"
-            height="0.8"
-            rx="0.4"
-            fill="currentColor"
-          />
-          {/* Speech bubble / storytelling */}
-          <path
-            d="M17 12C19 12 20 13.5 20 15C20 16.5 19 18 17 18H16L15 20L14 18H13C11 18 10 16.5 10 15C10 13.5 11 12 13 12H17Z"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="0.5"
-          />
-          {/* Button on remote */}
-          <circle
-            cx="9.5"
-            cy="7.4"
-            r="0.4"
-            fill="white"
-          />
-          <circle
-            cx="16.5"
-            cy="7.4"
-            r="0.4"
-            fill="white"
-          />
-        </svg>
+    <div className={`flex flex-col items-center gap-1 ${className}`}>
+      <div className="logo-container">
+        <div className={`bg-white flex items-center justify-center p-3 rounded-lg ${sizeClasses[size]}`}>
+          <svg
+            className="h-full w-auto"
+            viewBox="0 0 50 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M25 10C22 10 20 12 20 15C20 18 22 20 25 20C28 20 30 18 30 15C30 12 28 10 25 10Z"
+              fill="#632D6E"
+            />
+            <circle cx="21" cy="15" r="1" fill="#36A89F" />
+            <circle cx="29" cy="15" r="1" fill="#36A89F" />
+            <path
+              d="M16 22C16 18 20 14 25 14C30 14 34 18 34 22"
+              stroke="#632D6E"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M34 24C36 24 38 26 38 28C38 30 36 32 34 32H33L32 34L31 32H30C28 32 26 30 26 28C26 26 28 24 30 24H34Z"
+              fill="#E4746B"
+            />
+          </svg>
+        </div>
       </div>
-      <div className="font-bold">
-        <span className="text-playscribe-black">Play</span>
-        <span className="text-playscribe-purple">Scribe</span>
+      <div className="font-display font-bold text-base md:text-lg">
+        <span className="text-black">play</span>
+        <span className="text-playscribe-purple">scribe</span>
+        <span className="text-black">.</span>
       </div>
     </div>
   );

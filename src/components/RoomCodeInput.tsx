@@ -58,7 +58,7 @@ const RoomCodeInput: React.FC<RoomCodeInputProps> = ({ userType }) => {
           placeholder="Enter 6-character room code"
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
-          className="text-center text-xl uppercase"
+          className="text-center text-xl uppercase font-medium rounded-lg border-2 border-playscribe-purple"
           maxLength={6}
         />
         <Button
@@ -72,7 +72,8 @@ const RoomCodeInput: React.FC<RoomCodeInputProps> = ({ userType }) => {
       </div>
       <Button 
         onClick={handleJoinRoom} 
-        className="btn-primary"
+        variant={userType === 'storyteller' ? 'teal' : 'secondary'}
+        className="mt-2 py-6"
       >
         {userType === 'storyteller' ? 'Start Storytelling' : 'Join Game'}
       </Button>

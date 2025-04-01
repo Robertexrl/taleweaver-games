@@ -1,18 +1,21 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 2%;
+    --background: 240 30% 98%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 2%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 2%;
+    --popover-foreground: 0 0% 0%;
 
     --primary: 278 42% 30%;
     --primary-foreground: 0 0% 100%;
@@ -20,10 +23,10 @@
     --secondary: 174 51% 44%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 95%;
+    --muted: 0 0% 96%;
     --muted-foreground: 0 0% 50%;
 
-    --accent: 278 42% 30%;
+    --accent: 0 72% 66%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -43,25 +46,46 @@
   }
 
   body {
-    @apply bg-gradient-to-b from-[#9f5dab]/30 to-[#f3edf5] text-foreground min-h-screen;
+    @apply bg-gradient-to-b from-[#D8DAE9] to-[#E8E9F3] text-foreground min-h-screen;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold;
   }
 }
 
-.wavy-border {
-  border-radius: 50% 50% 50% 50% / 10% 10% 10% 10%;
+.card-shadow {
+  box-shadow: 3px 3px 0px rgba(228, 116, 107, 0.6);
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-playscribe-purple hover:bg-playscribe-purple/80 text-white py-4 px-6 rounded-xl font-medium text-lg shadow-md transition-all duration-300 flex items-center justify-center gap-2;
+    @apply bg-playscribe-teal hover:bg-playscribe-teal/90 text-white py-3 px-6 rounded-lg font-medium text-lg transition-all duration-300 flex items-center justify-center gap-2 border-2 border-playscribe-teal shadow-md;
   }
   
   .btn-secondary {
-    @apply bg-playscribe-teal hover:bg-playscribe-teal/80 text-white py-4 px-6 rounded-xl font-medium text-lg shadow-md transition-all duration-300 flex items-center justify-center gap-2;
+    @apply bg-playscribe-coral hover:bg-playscribe-coral/90 text-white py-3 px-6 rounded-lg font-medium text-lg transition-all duration-300 flex items-center justify-center gap-2 border-2 border-playscribe-coral shadow-md;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border-2 border-playscribe-purple text-playscribe-purple hover:bg-playscribe-purple/10 py-3 px-6 rounded-lg font-medium text-lg transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .prompt-card {
+    @apply bg-white border-2 border-playscribe-teal rounded-lg p-6 shadow-md;
+  }
+
+  .logo-container {
+    @apply relative;
+  }
+  
+  .logo-container::after {
+    content: "";
+    @apply absolute -bottom-1 -right-1 w-full h-full bg-playscribe-coral rounded-lg -z-10;
   }
 
   .card-container {
-    @apply bg-white rounded-2xl shadow-md p-6 border border-playscribe-lightGray;
+    @apply bg-white rounded-lg shadow-md p-6 border-2 border-playscribe-teal;
   }
 }
