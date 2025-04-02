@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -54,6 +55,7 @@ export default {
 				},
 				playscribe: {
 					purple: '#632D6E',
+					'purple-light': '#8A4E97',
 					teal: '#36A89F',
 					coral: '#E4746B',
 					black: '#000000',

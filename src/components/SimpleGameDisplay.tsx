@@ -10,7 +10,7 @@ interface SimpleGameDisplayProps {
 
 // Simple game generation based on story content
 const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
-  const [gameType, setGameType] = useState<'quiz' | 'memory' | 'drawing'>('quiz');
+  const [gameType, setGameType] = useState<'quiz' | 'memory' | 'adventure'>('quiz');
   const [gameContent, setGameContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -28,6 +28,11 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
   const [matched, setMatched] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
+  
+  // Adventure game states
+  const [currentNode, setCurrentNode] = useState(0);
+  const [storyPath, setStoryPath] = useState<number[]>([0]);
+  const [adventureComplete, setAdventureComplete] = useState(false);
 
   useEffect(() => {
     if (storyText) {
@@ -47,9 +52,12 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     setMatched([]);
     setMoves(0);
     setGameComplete(false);
+    setCurrentNode(0);
+    setStoryPath([0]);
+    setAdventureComplete(false);
     
     // Select a random game type for demo purposes
-    const types: ('quiz' | 'memory' | 'drawing')[] = ['quiz', 'memory', 'drawing'];
+    const types: ('quiz' | 'memory' | 'adventure')[] = ['quiz', 'memory', 'adventure'];
     const randomType = types[Math.floor(Math.random() * types.length)];
     setGameType(randomType);
     
@@ -63,10 +71,10 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
         // Generate memory card pairs based on the story
         const pairs = generateMemoryPairs(storyText);
         setGameContent({ pairs });
-      } else if (randomType === 'drawing') {
-        // Generate stick figure scene based on the story
-        const scene = generateStickFigureScene(storyText);
-        setGameContent({ scene });
+      } else if (randomType === 'adventure') {
+        // Generate choose-your-path adventure based on the story
+        const adventure = generateAdventure(storyText);
+        setGameContent({ adventure });
       }
       
       setLoading(false);
@@ -121,17 +129,100 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     return pairs.sort(() => Math.random() - 0.5);
   };
 
-  const generateStickFigureScene = (text: string) => {
-    // For MVP, return a simple scene description
+  const generateAdventure = (text: string) => {
+    // For MVP, generate a simple choose-your-path adventure
     return {
-      title: "Children Playing Outside",
-      description: "A group of stick figures building a fort in the woods",
-      elements: [
-        { type: "person", x: 50, y: 150, label: "Child 1" },
-        { type: "person", x: 120, y: 150, label: "Child 2" },
-        { type: "structure", x: 200, y: 120, label: "Fort" },
-        { type: "tree", x: 250, y: 100, label: "Tree" },
-        { type: "tree", x: 300, y: 110, label: "Tree" }
+      title: "Back in My Day: An Adventure",
+      nodes: [
+        {
+          id: 0,
+          text: "You've traveled back in time to when your grandparent was a child. It's a sunny morning in the countryside. What do you want to do?",
+          choices: [
+            { id: 1, text: "Go play in the woods" },
+            { id: 2, text: "Help with chores around the farm" }
+          ]
+        },
+        {
+          id: 1,
+          text: "You head into the woods. The trees are tall and mysterious. You spot some other children building something in a clearing.",
+          choices: [
+            { id: 3, text: "Join them in building a fort" },
+            { id: 4, text: "Watch from a distance first" }
+          ]
+        },
+        {
+          id: 2,
+          text: "You decide to help with chores. There's feeding the chickens, picking vegetables from the garden, or helping fix the fence.",
+          choices: [
+            { id: 5, text: "Feed the chickens" },
+            { id: 6, text: "Pick vegetables" }
+          ]
+        },
+        {
+          id: 3,
+          text: "You join the children building a fort! They welcome you and give you the job of collecting sturdy branches. By midday, you've created an impressive hideout together.",
+          choices: [
+            { id: 7, text: "Suggest playing a game in the fort" },
+            { id: 8, text: "Ask them about their lives" }
+          ]
+        },
+        {
+          id: 4,
+          text: "You watch the children from behind a tree. They're laughing and working together to build what looks like a fort. One of them notices you.",
+          choices: [
+            { id: 3, text: "Wave and come out of hiding" },
+            { id: 9, text: "Quietly back away and explore elsewhere" }
+          ]
+        },
+        {
+          id: 5,
+          text: "The chickens cluck excitedly as you scatter feed. An older woman (your grandparent's mother) smiles at you. 'You have a good way with animals,' she says.",
+          choices: [
+            { id: 10, text: "Ask about what life is like here" },
+            { id: 6, text: "Offer to help with more chores" }
+          ]
+        },
+        {
+          id: 6,
+          text: "You help pick fresh vegetables from the garden. The smell of earth and growth is strong. You've never tasted vegetables this fresh before!",
+          choices: [
+            { id: 10, text: "Ask about what they'll cook with these" },
+            { id: 5, text: "Help with the animals next" }
+          ]
+        },
+        {
+          id: 7,
+          text: "You play hide and seek in and around the fort until the sun begins to set. This is the most outdoor fun you've had in ages!",
+          choices: [
+            { id: 11, text: "End your adventure and return home with this memory" }
+          ]
+        },
+        {
+          id: 8,
+          text: "The children tell you about life without smartphones, internet, or video games. Instead, they make up games, tell stories, and use their imagination.",
+          choices: [
+            { id: 11, text: "End your adventure and return home with this knowledge" }
+          ]
+        },
+        {
+          id: 9,
+          text: "You explore deeper in the woods and find a small stream with fish darting beneath the surface. It's peaceful here.",
+          choices: [
+            { id: 11, text: "End your adventure with this moment of solitude" }
+          ]
+        },
+        {
+          id: 10,
+          text: "You learn about daily life in this time - how different it is without modern technology, but also how people connect more with each other and nature.",
+          choices: [
+            { id: 11, text: "End your adventure with these insights" }
+          ]
+        },
+        {
+          id: 11,
+          text: "Your time travel adventure ends. You've experienced a day in the life of past generations, gaining appreciation for their experiences and how they shape our present.",
+          choices: []
+        }
       ]
     };
   };
@@ -201,6 +292,17 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     }
   };
 
+  const handleChoiceSelect = (choiceId: number) => {
+    setCurrentNode(choiceId);
+    setStoryPath(prev => [...prev, choiceId]);
+    
+    // Check if adventure is complete (node has no more choices)
+    const nextNode = gameContent?.adventure.nodes.find((n: any) => n.id === choiceId);
+    if (nextNode?.choices.length === 0) {
+      setAdventureComplete(true);
+    }
+  };
+
   const renderQuizGame = () => {
     if (!gameContent?.questions) return null;
     
@@ -216,13 +318,13 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
               </span>
               <div className="w-full bg-gray-200 h-2 rounded-full mt-2">
                 <div 
-                  className="bg-taleweaver-purple h-2 rounded-full"
+                  className="bg-playscribe-purple h-2 rounded-full"
                   style={{ width: `${((currentQuestion + 1) / gameContent.questions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
             
-            <div className="p-4 bg-taleweaver-lightPurple rounded-xl">
+            <div className="p-4 bg-playscribe-purple bg-opacity-10 rounded-xl">
               <h4 className="text-lg font-medium mb-4">
                 {gameContent.questions[currentQuestion].question}
               </h4>
@@ -248,7 +350,7 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
             </div>
           </>
         ) : (
-          <div className="text-center p-6 bg-taleweaver-yellow rounded-xl">
+          <div className="text-center p-6 bg-playscribe-coral bg-opacity-10 rounded-xl">
             <h4 className="text-xl font-bold mb-2">Quiz Complete!</h4>
             <p className="text-lg mb-4">You scored {score} out of {gameContent.questions.length}</p>
             <Button onClick={() => setShowFeedback(true)} className="btn-primary">
@@ -279,15 +381,15 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
               {gameContent.pairs.map((card: any) => (
                 <div
                   key={card.id}
-                  className={`aspect-square bg-taleweaver-purple rounded-md flex items-center justify-center cursor-pointer transition-all transform ${
+                  className={`aspect-square bg-playscribe-purple rounded-md flex items-center justify-center cursor-pointer transition-all transform ${
                     flipped.includes(card.id) || matched.includes(card.id)
-                      ? "bg-white border-2 border-taleweaver-purple"
+                      ? "bg-white border-2 border-playscribe-purple"
                       : "hover:scale-105"
                   }`}
                   onClick={() => handleCardClick(card.id)}
                 >
                   {(flipped.includes(card.id) || matched.includes(card.id)) && (
-                    <span className="font-bold text-taleweaver-darkPurple">
+                    <span className="font-bold text-playscribe-purple">
                       {card.content}
                     </span>
                   )}
@@ -296,7 +398,7 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
             </div>
           </>
         ) : (
-          <div className="text-center p-6 bg-taleweaver-yellow rounded-xl">
+          <div className="text-center p-6 bg-playscribe-coral bg-opacity-10 rounded-xl">
             <h4 className="text-xl font-bold mb-2">Memory Game Complete!</h4>
             <p className="text-lg mb-4">You completed the game in {moves} moves</p>
             <Button onClick={() => setShowFeedback(true)} className="btn-primary">
@@ -308,67 +410,58 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     );
   };
 
-  const renderDrawingGame = () => {
-    if (!gameContent?.scene) return null;
+  const renderAdventureGame = () => {
+    if (!gameContent?.adventure) return null;
+    
+    const currentNodeData = gameContent?.adventure.nodes.find((n: any) => n.id === currentNode);
     
     return (
       <div className="space-y-6">
-        <h3 className="text-xl font-bold text-center">Story Drawing</h3>
+        <h3 className="text-xl font-bold text-center">Choose-Your-Path Adventure</h3>
         
-        <div className="bg-white border-2 border-taleweaver-lightPurple rounded-xl p-4">
-          <h4 className="text-lg font-medium text-center mb-4">{gameContent.scene.title}</h4>
-          
-          <div className="relative w-full h-64 bg-taleweaver-blue rounded-lg overflow-hidden">
-            {gameContent.scene.elements.map((element: any, idx: number) => (
-              <div
-                key={idx}
-                className="absolute"
-                style={{ top: element.y, left: element.x }}
-              >
-                {element.type === 'person' && (
-                  <div className="flex flex-col items-center">
-                    <div className="w-8 h-8 rounded-full bg-black mb-1"></div>
-                    <div className="w-1 h-10 bg-black"></div>
-                    <div className="flex">
-                      <div className="w-6 h-1 bg-black transform -rotate-45"></div>
-                      <div className="w-6 h-1 bg-black transform rotate-45"></div>
-                    </div>
-                    <div className="flex mt-1">
-                      <div className="w-6 h-1 bg-black transform rotate-20"></div>
-                      <div className="w-6 h-1 bg-black transform -rotate-20"></div>
-                    </div>
-                    <div className="mt-2 text-xs">{element.label}</div>
-                  </div>
-                )}
-                
-                {element.type === 'structure' && (
-                  <div className="flex flex-col items-center">
-                    <div className="w-20 h-16 border-2 border-black"></div>
-                    <div className="mt-2 text-xs">{element.label}</div>
-                  </div>
-                )}
-                
-                {element.type === 'tree' && (
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-16 bg-green-700 rounded-full"></div>
-                    <div className="w-2 h-6 bg-brown-500"></div>
-                    <div className="mt-2 text-xs">{element.label}</div>
-                  </div>
-                )}
+        {!adventureComplete ? (
+          <>
+            <div className="text-center mb-4">
+              <span className="text-sm font-medium">
+                Your adventure journey: {storyPath.length} steps
+              </span>
+              <div className="flex justify-center gap-1 mt-2">
+                {storyPath.map((nodeId, index) => (
+                  <div 
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-playscribe-purple"
+                  ></div>
+                ))}
               </div>
-            ))}
-          </div>
-          
-          <p className="text-center mt-4 text-sm text-gray-600">
-            {gameContent.scene.description}
-          </p>
-          
-          <div className="mt-6 flex justify-center">
+            </div>
+            
+            <div className="p-6 bg-playscribe-purple bg-opacity-5 rounded-xl">
+              <h4 className="text-lg font-medium mb-6 leading-relaxed">
+                {currentNodeData?.text}
+              </h4>
+              
+              <div className="space-y-3">
+                {currentNodeData?.choices.map((choice: any) => (
+                  <button
+                    key={choice.id}
+                    className="w-full p-4 rounded-lg text-left border-2 border-playscribe-purple hover:bg-playscribe-purple hover:text-white transition-colors"
+                    onClick={() => handleChoiceSelect(choice.id)}
+                  >
+                    {choice.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="text-center p-6 bg-playscribe-coral bg-opacity-10 rounded-xl">
+            <h4 className="text-xl font-bold mb-2">Adventure Complete!</h4>
+            <p className="text-lg mb-4">You made {storyPath.length - 1} choices in your journey</p>
             <Button onClick={() => setShowFeedback(true)} className="btn-primary">
-              Rate This Drawing
+              Rate This Game
             </Button>
           </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -377,7 +470,7 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
     <Card className="p-6 w-full">
       {loading ? (
         <div className="flex flex-col items-center py-10">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-taleweaver-purple mb-4"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-playscribe-purple mb-4"></div>
           <p className="text-xl font-medium">Creating a game from your story...</p>
           <p className="text-sm text-gray-500 mt-2">This may take a moment</p>
         </div>
@@ -392,7 +485,7 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
                 onClick={() => setFeedbackRating(rating)}
                 className={`h-10 w-10 rounded-full flex items-center justify-center text-xl transition-all ${
                   feedbackRating >= rating
-                    ? "bg-taleweaver-purple text-white"
+                    ? "bg-playscribe-purple text-white"
                     : "bg-gray-100 text-gray-400 hover:bg-gray-200"
                 }`}
               >
@@ -421,7 +514,7 @@ const SimpleGameDisplay: React.FC<SimpleGameDisplayProps> = ({ storyText }) => {
         <div>
           {gameType === 'quiz' && renderQuizGame()}
           {gameType === 'memory' && renderMemoryGame()}
-          {gameType === 'drawing' && renderDrawingGame()}
+          {gameType === 'adventure' && renderAdventureGame()}
           
           <div className="mt-6 flex justify-center">
             <Button
