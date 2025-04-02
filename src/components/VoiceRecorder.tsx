@@ -164,7 +164,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscriptUpdate }) => 
           {!isRecording ? (
             <Button
               onClick={startRecording}
-              className="bg-taleweaver-purple hover:bg-taleweaver-darkPurple text-white"
+              variant="teal"
               size="lg"
             >
               <Mic className="mr-2 h-5 w-5" />

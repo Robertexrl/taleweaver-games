@@ -79,9 +79,9 @@ const StorytellerSession = () => {
         <div className="flex justify-center mt-8">
           <Button
             onClick={handleCreateGame}
-            className="btn-primary"
-            disabled={!transcript.trim()}
+            variant="teal"
             size="lg"
+            disabled={!transcript.trim()}
           >
             Create Game From Story
           </Button>

@@ -18,7 +18,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
       <div className="logo-container">
         <div className={`bg-white flex items-center justify-center p-3 rounded-lg ${sizeClasses[size]}`}>
           <img 
-            src="/lovable-uploads/526561e7-2a81-487b-b80c-76f8177346d4.png" 
+            src="/lovable-uploads/d8800917-7107-4e3f-9876-7f34cb119ac0.png" 
             alt="PlayScribe Logo" 
             className="h-full w-auto"
           />
