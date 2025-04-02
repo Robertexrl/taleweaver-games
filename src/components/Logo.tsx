@@ -8,9 +8,9 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
   const sizeClasses = {
-    sm: 'h-10 w-10',
-    md: 'h-16 w-16',
-    lg: 'h-20 w-20'
+    sm: 'h-20 w-20', // Doubled from h-10 w-10
+    md: 'h-32 w-32', // Doubled from h-16 w-16
+    lg: 'h-40 w-40'  // Doubled from h-20 w-20
   };
 
   return (
@@ -24,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
           />
         </div>
       </div>
-      <div className="font-display font-bold text-base md:text-lg">
+      <div className="font-display font-bold text-base md:text-xl">
         <span className="text-black">play</span>
         <span className="text-playscribe-purple">scribe</span>
         <span className="text-black">.</span>
