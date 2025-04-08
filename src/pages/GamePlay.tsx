@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import Logo from '@/components/Logo';
-import { ArrowLeft, Home, HelpCircle, Gamepad, Puzzle, VolumeUp } from 'lucide-react';
+import { ArrowLeft, Home, HelpCircle, Gamepad, Puzzle, Volume } from 'lucide-react';
 
 const GamePlay = () => {
   const { roomCode } = useParams<{ roomCode: string }>();
@@ -16,7 +15,6 @@ const GamePlay = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  // Simulating data loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -75,7 +73,7 @@ const GamePlay = () => {
                   variant="outline"
                   className="flex items-center"
                 >
-                  <VolumeUp className="mr-2 h-4 w-4" />
+                  <Volume className="mr-2 h-4 w-4" />
                   Listen
                 </Button>
               </div>

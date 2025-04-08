@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Shuffle, VolumeUp } from 'lucide-react';
+import { Shuffle, Volume } from 'lucide-react';
 
-// Card interface
 interface Card {
   id: number;
   imageUrl: string;
@@ -12,7 +10,6 @@ interface Card {
   isMatched: boolean;
 }
 
-// Props interface
 interface MemoryCardGameProps {
   storyText: string;
   onGameComplete: () => void;
@@ -28,7 +25,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   
-  // Sample images for the memory game
   const imageUrls = [
     "https://images.unsplash.com/photo-1582562124811-c09040d0a901?auto=format&fit=crop&q=80&w=300&h=300",
     "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=300&h=300",
@@ -38,12 +34,10 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
     "https://images.unsplash.com/photo-1574144113084-b6f450cc5e0d?auto=format&fit=crop&q=80&w=300&h=300",
   ];
   
-  // Initialize the game
   useEffect(() => {
     initializeGame();
   }, []);
   
-  // Check for game over
   useEffect(() => {
     if (matchedPairs === imageUrls.length && matchedPairs > 0) {
       setIsGameOver(true);
@@ -55,7 +49,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
     }
   }, [matchedPairs, onGameComplete]);
   
-  // Check for matches when two cards are flipped
   useEffect(() => {
     if (flippedCards.length === 2) {
       const [firstCardId, secondCardId] = flippedCards;
@@ -63,7 +56,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
       const secondCard = cards.find(card => card.id === secondCardId);
       
       if (firstCard?.imageUrl === secondCard?.imageUrl) {
-        // Match found
         setCards(prevCards => 
           prevCards.map(card => 
             card.id === firstCardId || card.id === secondCardId
@@ -74,7 +66,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
         setMatchedPairs(prev => prev + 1);
         setFlippedCards([]);
       } else {
-        // No match, flip cards back after delay
         setTimeout(() => {
           setCards(prevCards => 
             prevCards.map(card => 
@@ -94,7 +85,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   const initializeGame = () => {
     setIsLoading(true);
     
-    // Create pairs of cards
     const cardPairs = imageUrls.flatMap((imageUrl, index) => [
       {
         id: index * 2,
@@ -110,7 +100,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
       }
     ]);
     
-    // Shuffle the cards
     const shuffledCards = [...cardPairs].sort(() => Math.random() - 0.5);
     
     setCards(shuffledCards);
@@ -123,13 +112,11 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   };
   
   const handleCardClick = (cardId: number) => {
-    // Prevent clicking if already two cards are flipped or if the card is already flipped/matched
     if (flippedCards.length >= 2) return;
     
     const clickedCard = cards.find(card => card.id === cardId);
     if (!clickedCard || clickedCard.isFlipped || clickedCard.isMatched) return;
     
-    // Flip the card
     setCards(prevCards => 
       prevCards.map(card => 
         card.id === cardId
@@ -138,7 +125,6 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
       )
     );
     
-    // Add to flipped cards
     setFlippedCards(prev => [...prev, cardId]);
   };
   
@@ -174,7 +160,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
             variant="outline"
             className="flex items-center"
           >
-            <VolumeUp className="mr-2 h-4 w-4" />
+            <Volume className="mr-2 h-4 w-4" />
             Listen to Story
           </Button>
           
