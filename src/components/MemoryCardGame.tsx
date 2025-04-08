@@ -6,7 +6,7 @@ import { Shuffle, Volume } from 'lucide-react';
 
 interface Card {
   id: number;
-  imageUrl: string;
+  content: string;
   isFlipped: boolean;
   isMatched: boolean;
 }
@@ -26,11 +26,11 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   
-  // Use only 3 pairs (6 tiles) for the demo
-  const imageUrls = [
-    "https://images.unsplash.com/photo-1540587222278-5a9d21b34fa2?auto=format&fit=crop&q=80&w=300&h=300", // Soccer/football
-    "https://images.unsplash.com/photo-1526385452221-62b9a91a037e?auto=format&fit=crop&q=80&w=300&h=300", // Globe/world map
-    "https://images.unsplash.com/photo-1509475826633-fed577a2c71b?auto=format&fit=crop&q=80&w=300&h=300", // Languages/books
+  // Use only 3 pairs (6 tiles) for the demo - with text related to the soccer story
+  const cardContents = [
+    "Soccer",
+    "Travel",
+    "Languages"
   ];
   
   useEffect(() => {
@@ -38,7 +38,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   }, []);
   
   useEffect(() => {
-    if (matchedPairs === imageUrls.length && matchedPairs > 0) {
+    if (matchedPairs === cardContents.length && matchedPairs > 0) {
       setIsGameOver(true);
       onGameComplete();
       toast({
@@ -46,7 +46,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
         description: "You've completed the memory game!",
       });
     }
-  }, [matchedPairs, onGameComplete, imageUrls.length, toast]);
+  }, [matchedPairs, onGameComplete, cardContents.length, toast]);
   
   useEffect(() => {
     if (flippedCards.length === 2) {
@@ -54,7 +54,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
       const firstCard = cards.find(card => card.id === firstCardId);
       const secondCard = cards.find(card => card.id === secondCardId);
       
-      if (firstCard?.imageUrl === secondCard?.imageUrl) {
+      if (firstCard?.content === secondCard?.content) {
         setCards(prevCards => 
           prevCards.map(card => 
             card.id === firstCardId || card.id === secondCardId
@@ -84,16 +84,16 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   const initializeGame = () => {
     setIsLoading(true);
     
-    const cardPairs = imageUrls.flatMap((imageUrl, index) => [
+    const cardPairs = cardContents.flatMap((content, index) => [
       {
         id: index * 2,
-        imageUrl,
+        content,
         isFlipped: false,
         isMatched: false
       },
       {
         id: index * 2 + 1,
-        imageUrl,
+        content,
         isFlipped: false,
         isMatched: false
       }
@@ -176,7 +176,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
       
       <div className="flex justify-between items-center mb-4">
         <div className="text-sm font-medium">
-          Pairs: {matchedPairs}/{imageUrls.length}
+          Pairs: {matchedPairs}/{cardContents.length}
         </div>
         <div className="text-sm font-medium">
           Moves: {moves}
@@ -207,11 +207,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
                   : 'border-gray-300 bg-playscribe-purple'
               }`}>
                 {(card.isFlipped || card.isMatched) ? (
-                  <img 
-                    src={card.imageUrl} 
-                    alt="Card" 
-                    className="w-full h-full object-cover rounded-lg"
-                  />
+                  <div className="text-xl font-bold">{card.content}</div>
                 ) : (
                   <div className="text-4xl font-bold text-white">?</div>
                 )}
