@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#9a6ba6] to-[#E8E9F3] flex flex-col items-center justify-between py-10 px-6 relative">
-      <div className="absolute top-6 right-6">
+      <div className="absolute top-6 right-6 flex flex-col items-center">
         <button 
           onClick={handleHowItWorks}
           className="rounded-full bg-white p-4 shadow-md hover:shadow-lg transition-all"
@@ -22,6 +22,7 @@ const Home = () => {
         >
           <HelpCircle className="h-8 w-8 text-playscribe-purple" />
         </button>
+        <span className="text-white font-medium mt-1 text-sm">How it works</span>
       </div>
       
       <div className="flex flex-col items-center justify-center flex-grow text-center w-full max-w-4xl">

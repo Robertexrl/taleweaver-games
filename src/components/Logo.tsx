@@ -8,9 +8,9 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
   const sizeClasses = {
-    sm: 'h-20 w-20', // Doubled from h-10 w-10
-    md: 'h-32 w-32', // Doubled from h-16 w-16
-    lg: 'h-40 w-40'  // Doubled from h-20 w-20
+    sm: 'h-20 w-20',
+    md: 'h-32 w-32',
+    lg: 'h-40 w-40'
   };
 
   return (
@@ -18,7 +18,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '' }) => {
       <div className="logo-container">
         <div className={`bg-white flex items-center justify-center p-3 rounded-lg ${sizeClasses[size]}`}>
           <img 
-            src="/lovable-uploads/fff47d19-31e9-4fc6-a590-b718df1359fa.png" 
+            src="/lovable-uploads/161aa7b3-d81f-4352-a7e1-e6d86dda831f.png" 
             alt="PlayScribe Logo" 
             className="h-full w-auto"
           />
