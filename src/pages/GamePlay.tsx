@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,7 @@ const GamePlay = () => {
   const { roomCode } = useParams<{ roomCode: string }>();
   const [loading, setLoading] = useState(true);
   const [storyTitle, setStoryTitle] = useState("Grandma's Childhood Adventures");
-  const [storyText, setStoryText] = useState("When I was a child, we used to play outside all day long. We didn't have phones or computers. We would build forts in the woods.");
+  const [storyText, setStoryText] = useState("When I was a kid, I use to be a professional soccer player. Thanks to it I travelled all over the world and learnt about different cultures and languages, I can speak Spanish, Portuguese, and English");
   
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -40,17 +41,21 @@ const GamePlay = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#9a6ba6] to-[#E8E9F3] flex flex-col">
-      <header className="p-4 flex justify-between items-center">
-        <Link to="/login/player" className="flex items-center text-purple-900">
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          <span>Go back</span>
-        </Link>
+      <header className="p-4 flex justify-center items-center relative">
+        <div className="absolute left-4">
+          <Link to="/login/player" className="flex items-center text-purple-900">
+            <ArrowLeft className="mr-2 h-15 w-15" />
+            <span className="text-lg">Go back</span>
+          </Link>
+        </div>
         
         <Logo size="md" />
         
-        <Link to="/" className="text-purple-900">
-          <Home className="h-5 w-5" />
-        </Link>
+        <div className="absolute right-4">
+          <Link to="/" className="text-purple-900">
+            <Home className="h-15 w-15" />
+          </Link>
+        </div>
       </header>
       
       <main className="flex flex-col items-center justify-center flex-grow px-6 text-center">

@@ -39,17 +39,21 @@ const GameCodeShare = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#9a6ba6] to-[#E8E9F3] flex flex-col">
-      <header className="p-4 flex justify-between items-center">
-        <Link to={`/storyteller/${roomCode}`} className="flex items-center text-purple-900">
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          <span>Go back</span>
-        </Link>
+      <header className="p-4 flex justify-center items-center relative">
+        <div className="absolute left-4">
+          <Link to={`/storyteller/${roomCode}`} className="flex items-center text-purple-900">
+            <ArrowLeft className="mr-2 h-15 w-15" />
+            <span className="text-lg">Go back</span>
+          </Link>
+        </div>
         
         <Logo size="md" />
         
-        <Link to="/" className="text-purple-900">
-          <Home className="h-5 w-5" />
-        </Link>
+        <div className="absolute right-4">
+          <Link to="/" className="text-purple-900">
+            <Home className="h-15 w-15" />
+          </Link>
+        </div>
       </header>
       
       <main className="flex flex-col items-center justify-center flex-grow px-6 text-center">
@@ -61,8 +65,8 @@ const GameCodeShare = () => {
         <div className="mt-10 mb-6">
           <div className="text-3xl font-bold text-purple-900 mb-2 flex items-center justify-center">
             Room Code: <span className="ml-2 text-purple-700" onClick={() => navigator.clipboard.writeText(roomCode || "")}>{roomCode}</span>
-            <button onClick={handleShareCode} className="ml-2 p-1 hover:bg-purple-100 rounded-full">
-              <Share2 className="h-5 w-5 text-purple-700" />
+            <button onClick={handleShareCode} className="ml-2 p-2 hover:bg-purple-100 rounded-full">
+              <Share2 className="h-10 w-10 text-purple-700" />
             </button>
           </div>
           <p className="text-lg">Share this with your favorite kiddo—game time awaits!</p>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -25,13 +26,11 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   
+  // Use only 3 pairs (6 tiles) for the demo
   const imageUrls = [
-    "https://images.unsplash.com/photo-1582562124811-c09040d0a901?auto=format&fit=crop&q=80&w=300&h=300",
-    "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=300&h=300",
-    "https://images.unsplash.com/photo-1501286353178-1ec871c42e5f?auto=format&fit=crop&q=80&w=300&h=300",
-    "https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?auto=format&fit=crop&q=80&w=300&h=300",
-    "https://images.unsplash.com/photo-1579168765467-3b235f938439?auto=format&fit=crop&q=80&w=300&h=300",
-    "https://images.unsplash.com/photo-1574144113084-b6f450cc5e0d?auto=format&fit=crop&q=80&w=300&h=300",
+    "https://images.unsplash.com/photo-1540587222278-5a9d21b34fa2?auto=format&fit=crop&q=80&w=300&h=300", // Soccer/football
+    "https://images.unsplash.com/photo-1526385452221-62b9a91a037e?auto=format&fit=crop&q=80&w=300&h=300", // Globe/world map
+    "https://images.unsplash.com/photo-1509475826633-fed577a2c71b?auto=format&fit=crop&q=80&w=300&h=300", // Languages/books
   ];
   
   useEffect(() => {
@@ -47,7 +46,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
         description: "You've completed the memory game!",
       });
     }
-  }, [matchedPairs, onGameComplete]);
+  }, [matchedPairs, onGameComplete, imageUrls.length, toast]);
   
   useEffect(() => {
     if (flippedCards.length === 2) {
@@ -189,7 +188,7 @@ const MemoryCardGame: React.FC<MemoryCardGameProps> = ({ storyText, onGameComple
           <p>Loading game...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-md mx-auto">
           {cards.map((card) => (
             <div 
               key={card.id} 
