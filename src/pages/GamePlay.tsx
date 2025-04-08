@@ -1,107 +1,125 @@
 
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import Logo from '@/components/Logo';
-import SimpleGameDisplay from '@/components/SimpleGameDisplay';
+import { ArrowLeft, Home, HelpCircle, Gamepad, Puzzle, VolumeUp } from 'lucide-react';
 
 const GamePlay = () => {
   const { roomCode } = useParams<{ roomCode: string }>();
-  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const [storyTitle, setStoryTitle] = useState("Grandma's Childhood Adventures");
+  const [storyText, setStoryText] = useState("When I was a child, we used to play outside all day long. We didn't have phones or computers. We would build forts in the woods.");
+  
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(true);
-  const [storyText, setStoryText] = useState<string>('');
   
+  // Simulating data loading
   useEffect(() => {
-    // Check if we have story text from the storyteller session
-    if (location.state?.storyText) {
-      setStoryText(location.state.storyText);
-      setLoading(false);
-      return;
-    }
-    
-    // For MVP demo purposes, set a default sample story if no real story exists
-    const demoStory = "When I was a child, we used to play outside all day long. We didn't have phones or computers. We would build forts in the woods and pretend we were explorers discovering new lands. Sometimes we would play until the sun went down and our parents called us home for dinner. Those were some of the happiest days of my childhood.";
-    
-    // Simulate loading of a story
     const timer = setTimeout(() => {
-      setStoryText(demoStory);
       setLoading(false);
     }, 1500);
     
     return () => clearTimeout(timer);
-  }, [location.state]);
-
-  const handleNewGame = () => {
-    // For MVP, we'll just reload the current page to reset the game
-    navigate(0);
+  }, []);
+  
+  const handlePlayMemoryGame = () => {
+    navigate(`/memory-game/${roomCode}`, { state: { storyText } });
   };
-
-  const handleEndSession = () => {
+  
+  const handlePlayAudio = () => {
     toast({
-      title: "Session Ended",
-      description: "Thank you for playing! You're being redirected to the home page."
+      title: "Playing Audio",
+      description: "This would play the story audio in a real implementation."
     });
-    
-    setTimeout(() => {
-      navigate('/');
-    }, 1500);
+  };
+  
+  const navigateToHowItWorks = () => {
+    navigate('/how-it-works');
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center mb-8">
-          <Link to="/">
-            <Logo size="md" />
-          </Link>
-          <div className="bg-white px-4 py-2 rounded-full text-sm font-medium border border-gray-200">
-            Room Code: <span className="text-playscribe-purple">{roomCode}</span>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-[#9a6ba6] to-[#E8E9F3] flex flex-col">
+      <header className="p-4 flex justify-between items-center">
+        <Link to="/login/player" className="flex items-center text-purple-900">
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          <span>Go back</span>
+        </Link>
         
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-playscribe-purple mb-2">Story Game</h1>
-          <p className="text-gray-600 max-w-xl mx-auto">
-            This interactive game was created from a real story shared by someone from an older generation.
-          </p>
-        </div>
+        <Logo size="md" />
         
+        <Link to="/" className="text-purple-900">
+          <Home className="h-5 w-5" />
+        </Link>
+      </header>
+      
+      <main className="flex flex-col items-center justify-center flex-grow px-6 text-center">
         {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-playscribe-purple mb-4 mx-auto"></div>
-            <p className="text-xl font-medium">Loading the story game...</p>
+          <div className="flex flex-col items-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-playscribe-purple mb-4"></div>
+            <p className="text-lg">Loading the story and games...</p>
           </div>
         ) : (
-          <div className="max-w-3xl mx-auto">
-            <SimpleGameDisplay storyText={storyText} />
+          <>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              {storyTitle}
+            </h1>
             
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-              <Button 
-                onClick={handleNewGame}
-                variant="outline"
-                className="border-playscribe-purple text-playscribe-purple"
-              >
-                Try Another Game
-              </Button>
-              <Button 
-                onClick={handleEndSession}
-                className="btn-primary"
-              >
-                End Session
-              </Button>
+            <Card className="w-full max-w-4xl p-6 mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">The Story</h2>
+                <Button 
+                  onClick={handlePlayAudio}
+                  variant="outline"
+                  className="flex items-center"
+                >
+                  <VolumeUp className="mr-2 h-4 w-4" />
+                  Listen
+                </Button>
+              </div>
+              
+              <p className="text-lg mb-4">{storyText}</p>
+            </Card>
+            
+            <h2 className="text-2xl font-bold mb-4">Choose a Game to Play</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mb-8">
+              <Card className="p-6 hover:shadow-lg transition-all cursor-pointer" onClick={handlePlayMemoryGame}>
+                <div className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-playscribe-purple flex items-center justify-center mb-4">
+                    <Puzzle className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Memory Card Game</h3>
+                  <p className="text-gray-600 text-center">Match pairs of cards featuring images from the story</p>
+                </div>
+              </Card>
+              
+              <Card className="p-6 hover:shadow-lg transition-all cursor-pointer">
+                <div className="flex flex-col items-center">
+                  <div className="w-16 h-16 rounded-full bg-playscribe-coral flex items-center justify-center mb-4">
+                    <Gamepad className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Choose-Your-Path Adventure</h3>
+                  <p className="text-gray-600 text-center">Make choices that influence the direction of the story</p>
+                </div>
+              </Card>
             </div>
-          </div>
+          </>
         )}
-        
-        <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500">
-            Every game is unique because it's created from a real person's memories and experiences.
-          </p>
-        </div>
-      </div>
+      </main>
+      
+      <footer className="p-6 text-center text-sm text-gray-600 flex justify-between items-center">
+        <div>Terms and Privacy | All Right Reserved 2025 | Developed by SheTells</div>
+        <button 
+          onClick={navigateToHowItWorks}
+          className="rounded-full bg-white p-3 shadow-md hover:shadow-lg"
+          aria-label="How this works"
+        >
+          <HelpCircle className="h-6 w-6 text-playscribe-purple" />
+        </button>
+      </footer>
     </div>
   );
 };

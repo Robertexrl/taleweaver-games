@@ -9,6 +9,10 @@ import Login from "./pages/Login";
 import StorytellerSession from "./pages/StorytellerSession";
 import GamePlay from "./pages/GamePlay";
 import NotFound from "./pages/NotFound";
+import HowItWorks from "./pages/HowItWorks";
+import GrandparentNickname from "./pages/GrandparentNickname";
+import GameCodeShare from "./pages/GameCodeShare";
+import MemoryGame from "./pages/MemoryGame";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +27,10 @@ const App = () => (
           <Route path="/login/:userType" element={<Login />} />
           <Route path="/storyteller/:roomCode" element={<StorytellerSession />} />
           <Route path="/play/:roomCode" element={<GamePlay />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/grandparent-nickname" element={<GrandparentNickname />} />
+          <Route path="/game-code/:roomCode" element={<GameCodeShare />} />
+          <Route path="/memory-game/:roomCode" element={<MemoryGame />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

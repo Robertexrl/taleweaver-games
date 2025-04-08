@@ -1,70 +1,97 @@
 
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Logo from '@/components/Logo';
-import RoomCodeInput from '@/components/RoomCodeInput';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { ArrowLeft, Home, HelpCircle } from 'lucide-react';
 
 const Login = () => {
   const { userType } = useParams<{ userType: 'storyteller' | 'player' }>();
+  const [gamePin, setGamePin] = useState('');
+  const navigate = useNavigate();
+  const { toast } = useToast();
   
+  const handleEnterRoom = () => {
+    if (!gamePin.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a game pin",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Navigate to the appropriate game
+    navigate(`/play/${gamePin}`);
+  };
+
+  const navigateToHowItWorks = () => {
+    navigate('/how-it-works');
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12 flex flex-col items-center">
-        <Link to="/">
-          <Logo size="md" className="mb-8" />
+    <div className="min-h-screen bg-gradient-to-b from-[#9a6ba6] to-[#E8E9F3] flex flex-col">
+      <header className="p-4 flex justify-between items-center">
+        <Link to="/" className="flex items-center text-purple-900">
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          <span>Go back</span>
         </Link>
         
-        <div className="card-container max-w-md w-full">
-          <div className="p-8">
-            <h1 className="text-3xl font-bold text-center mb-6">
-              {userType === 'storyteller' ? 'Storyteller Login' : 'Game Player Login'}
-            </h1>
+        <Logo size="md" />
+        
+        <Link to="/" className="text-purple-900">
+          <Home className="h-5 w-5" />
+        </Link>
+      </header>
+      
+      <main className="flex flex-col items-center justify-center flex-grow px-6 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          Connecting Generations<br/>
+          Stories and Games
+        </h1>
+        
+        <div className="bg-white rounded-lg p-10 shadow-lg w-full max-w-xl">
+          <h2 className="text-3xl font-bold mb-6">Game Pin</h2>
+          
+          <Input
+            placeholder="Enter your game pin, please!"
+            value={gamePin}
+            onChange={(e) => setGamePin(e.target.value.toUpperCase())}
+            className="text-center text-xl uppercase font-medium rounded-lg border-2 border-playscribe-purple mb-6 p-6"
+            maxLength={8}
+          />
+          
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate(-1)}
+              variant="outline"
+              className="flex-1 py-4"
+            >
+              Go back
+            </Button>
             
-            <p className="text-center mb-8">
-              {userType === 'storyteller'
-                ? 'Share your stories and create games for the younger generation.'
-                : 'Play games based on real-life stories from older generations.'}
-            </p>
-            
-            <RoomCodeInput userType={userType || 'player'} />
-            
-            <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-              <p className="text-sm text-gray-500 mb-4">
-                Want to {userType === 'storyteller' ? 'play games' : 'tell stories'} instead?
-              </p>
-              <Link to={userType === 'storyteller' ? '/login/player' : '/login/storyteller'}>
-                <Button variant="outline" className="w-full">
-                  Switch to {userType === 'storyteller' ? 'Game Player' : 'Storyteller'}
-                </Button>
-              </Link>
-            </div>
+            <Button
+              onClick={handleEnterRoom}
+              className="bg-playscribe-teal hover:bg-playscribe-teal/90 flex-1 py-4 font-bold text-lg"
+            >
+              Enter Room
+            </Button>
           </div>
         </div>
-        
-        <div className="mt-8 text-center max-w-md">
-          <h2 className="text-xl font-semibold mb-3">
-            {userType === 'storyteller' ? 'Tips for Storytellers' : 'Tips for Game Players'}
-          </h2>
-          <ul className="text-sm list-disc text-left pl-6 space-y-2">
-            {userType === 'storyteller' ? (
-              <>
-                <li>Find a quiet place to record your story</li>
-                <li>Speak clearly and at a comfortable pace</li>
-                <li>Include specific details to make your story come alive</li>
-                <li>Don't worry about making mistakes - just keep going!</li>
-              </>
-            ) : (
-              <>
-                <li>Ask an adult for help if you need it</li>
-                <li>Each game is based on a real-life story</li>
-                <li>Try different games to learn different stories</li>
-                <li>Share what you learned with friends and family</li>
-              </>
-            )}
-          </ul>
-        </div>
-      </div>
+      </main>
+      
+      <footer className="p-6 text-center text-sm text-gray-600 flex justify-between items-center">
+        <div>Terms and Privacy | All Right Reserved 2025 | Developed by SheTells</div>
+        <button 
+          onClick={navigateToHowItWorks}
+          className="rounded-full bg-white p-3 shadow-md hover:shadow-lg"
+          aria-label="How this works"
+        >
+          <HelpCircle className="h-6 w-6 text-playscribe-purple" />
+        </button>
+      </footer>
     </div>
   );
 };
